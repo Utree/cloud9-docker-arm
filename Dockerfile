@@ -33,6 +33,7 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
 
 # Install Bower, Grunt & Composer
 RUN npm install -g bower grunt-cli getcomposer
+RUN echo '{ "allow_root": true }' > /root/.bowerrc
 
 # Install Yarn
 
