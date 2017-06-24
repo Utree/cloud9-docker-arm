@@ -1,17 +1,13 @@
 Cloud9 v3 in docker on Raspberry Pi
 =============
 
-This is a fork from [kdelfour](https://github.com/kdelfour/cloud9-docker). I also used [flyingprogrammer's repo](https://github.com/flyinprogrammer/cloud9-with-carina) for reference.  Much thanks to those two for their excellent work.
-
-The major differences in this fork are the following:
-  1. This is an ARM architecture
-  1. Node runs as a non-root user - hence port 8080
+This is a fork from [BarryWilliams](https://github.com/BarryWilliams/cloud9-docker-arm).
 
 # Base Docker Image
 [armv7/armhf-ubuntu:14.10](https://hub.docker.com/r/armv7/armhf-ubuntu/)
 
 # Docker Hub Image
-[barrywilliams/cloud9-docker-arm](https://hub.docker.com/r/barrywilliams/cloud9-docker-arm/)
+[stockmind/cloud9-docker-arm](https://hub.docker.com/r/stockmind/cloud9-docker-arm)
 
 # Installation
 
@@ -21,21 +17,27 @@ Follow [Hypriot's Blog]() to install docker on a Raspberry Pi
 ## Run it
 
 ```
-docker run -it -d -p 80:8080 barrywilliams/cloud9-docker-arm
+docker run -it -d -p 80:8080 stockmind/cloud9-docker-arm
 ```    
 You can also provide auth credentials
 ```    
-docker run -d -p 80:8080 -e AUTH=user:pass barrywilliams/cloud9-docker-arm
+docker run -d -p 80:8080 -e AUTH=user:pass stockmind/cloud9-docker-arm
 ``` 
 And the collab flag
 ```    
-docker run -d -p 80:8080 -e COLLAB=true barrywilliams/cloud9-docker-arm
+docker run -d -p 80:8080 -e COLLAB=true stockmind/cloud9-docker-arm
 ```
 
 You can add a workspace as a volume directory with the argument `-v /your-path/workspace/:/workspace/` like this :
 ```
-docker run -it -d -p 80:8080 -v /your-path/workspace/:/workspace/ barrywilliams/cloud9-docker-arm
+docker run -it -d -p 80:8080 -v /your-path/workspace/:/workspace/ stockmind/cloud9-docker-arm
 ``` 
+
+You can also add a git repository to let the container download it for you during set up of workspace
+```    
+docker run -d -p 80:8080 -e GITCLONE=https://url.to/git/repo.git stockmind/cloud9-docker-arm
+```
+
 ## Use It
 
 Navigate to your raspberry pi: `http://<your pi's address>`
@@ -44,7 +46,7 @@ Navigate to your raspberry pi: `http://<your pi's address>`
 
 Clone the latest repo on a Raspberry Pi with Docker.
 ```
-git clone https://github.com/barrywilliams/cloud9-docker-arm
+git clone https://github.com/stockmind/cloud9-docker-arm
 ```
 
 Build it
