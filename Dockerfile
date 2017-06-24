@@ -16,19 +16,16 @@ RUN apt-get update && apt-get install -y \
 
 RUN ln -s /usr/bin/python2.7 /usr/bin/python
 
-# Add cloud9ide user
-RUN useradd -m cloud9ide
-
 # Install cloud9ide
-RUN runuser -l cloud9ide -c 'git clone https://github.com/c9/core.git /home/cloud9ide/cloud9'
-RUN runuser -l cloud9ide -c '/home/cloud9ide/cloud9/scripts/install-sdk.sh'
+RUN git clone https://github.com/c9/core.git /home/cloud9ide/cloud9
+RUN /home/cloud9ide/cloud9/scripts/install-sdk.sh
 
 # Update config
-RUN runuser -l cloud9ide -c "sed -i -e 's_127.0.0.1_0.0.0.0_g' /home/cloud9ide/cloud9/configs/standalone.js"
+RUN sed -i -e 's_127.0.0.1_0.0.0.0_g' /home/cloud9ide/cloud9/configs/standalone.js
 
 # Add workspace directory
-RUN mkdir /workspace && \
-    chown cloud9ide /workspace
+RUN mkdir /workspace
+VOLUME /workspace
 
 # Install Node.js
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
