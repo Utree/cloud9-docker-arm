@@ -1,6 +1,6 @@
 # Use ARM Ubunutu base image
-FROM armv7/armhf-ubuntu:14.10
-MAINTAINER Barry Williams <barry.e.williams42@gmail.com>
+FROM armv7/armhf-ubuntu
+MAINTAINER Simone Roberto Nunzi <simone.roberto.nunzi@gmail.com>
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
@@ -30,10 +30,23 @@ RUN runuser -l cloud9ide -c "sed -i -e 's_127.0.0.1_0.0.0.0_g' /home/cloud9ide/c
 RUN mkdir /workspace && \
     chown cloud9ide /workspace
 
+# Install Node.js
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
+  && apt-get install -y nodejs
+
+# Install Bower, Grunt & Composer
+RUN npm install -g bower grunt-cli getcomposer
+
+# Install Yarn
+
+#RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add
+#RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+#RUN apt-get update && apt-get install yarn
+
 # Cleanup apt-get
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
+    
 #Expose ports: Note port 8080 - node is not run as root
 EXPOSE 8080
 EXPOSE 3000
