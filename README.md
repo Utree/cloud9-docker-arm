@@ -17,7 +17,7 @@ Follow [Hypriot's Blog]() to install docker on a Raspberry Pi
 ## Run it
 
 ```
-docker run -it -d -p 80:8080 stockmind/cloud9-docker-arm
+docker run -it -d -p 8080:80 -p 80:8080 stockmind/cloud9-docker-arm
 ```    
 You can also provide auth credentials
 ```    
