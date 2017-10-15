@@ -48,6 +48,7 @@ RUN apt-get clean && \
 #Expose ports: Note port 8080 - node is not run as root
 EXPOSE 8080
 EXPOSE 3000
+EXPOSE 80
 
 # Setup entrypoint
 ADD entrypoint.sh /entrypoint.sh
