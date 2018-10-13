@@ -1,8 +1,11 @@
 # Use ARM Ubunutu base image
-FROM armv7/armhf-ubuntu
+FROM armv7/armhf-ubuntu:16.04
 MAINTAINER Simone Roberto Nunzi <simone.roberto.nunzi@gmail.com>
 
 # Install dependencies
+RUN cp -p /etc/apt/sources.list /etc/apt/sources.list.bak
+RUN sed -i -e 's/archive.ubuntu.com\|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
+RUN rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y \
     build-essential \
     g++ \
@@ -12,7 +15,13 @@ RUN apt-get update && apt-get install -y \
     git \
     libxml2-dev \
     sshfs \
-    python2.7
+    vim \
+    python2.7 \
+    python3 \
+    python3-dev \
+    python3-setuptools \
+    python3-pip
+RUN pip3 install -U pip setuptools
 
 RUN ln -s /usr/bin/python2.7 /usr/bin/python
 
