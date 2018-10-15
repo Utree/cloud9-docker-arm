@@ -58,3 +58,10 @@ And run
 docker run -d -p 80:80 -v /your-path/workspace/:/workspace/ $USER/cloud9-docker-arm:latest
 ``` 
 Enjoy !!    
+
+### memo
+#### make image
+sudo docker build -t cloud9:1.0 .
+#### make container
+sudo docker run -it -d -p 8080:8080 -v workspace:/workspace/  cloud9:1.0
+sudo docker run --name <name> -it -d -p <out_port>:8080 -e AUTH=<user>:<password> cloud9:1.0
