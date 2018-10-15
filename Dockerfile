@@ -3,9 +3,6 @@ FROM armv7/armhf-ubuntu:16.04
 MAINTAINER Simone Roberto Nunzi <simone.roberto.nunzi@gmail.com>
 
 # Install dependencies
-RUN cp -p /etc/apt/sources.list /etc/apt/sources.list.bak
-RUN sed -i -e 's/archive.ubuntu.com\|security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
-RUN rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y \
     build-essential \
     g++ \
@@ -16,6 +13,9 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     sshfs \
     vim \
+    wget \
+    zip \
+    unzip \
     python2.7 \
     python3 \
     python3-dev \
@@ -53,7 +53,7 @@ RUN echo '{ "allow_root": true }' > /root/.bowerrc
 # Cleanup apt-get
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-    
+
 #Expose ports: Note port 8080 - node is not run as root
 EXPOSE 8080
 EXPOSE 3000
@@ -63,3 +63,8 @@ EXPOSE 80
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod u+x /entrypoint.sh
 CMD ["/entrypoint.sh"]
+
+# Setup ngrok
+RUN wget https://dl.dropboxusercontent.com/s/3einnh9y51q01hg/ngrok-stable-linux-arm.zip -P /workspace/ngrok-stable-linux-arm.zip
+RUN unzip /workspace/ngrok-stable-linux-arm.zip -d /workspace/
+RUN rm /workspace/ngrok-stable-linux-arm.zip
